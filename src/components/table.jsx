@@ -29,8 +29,8 @@ function TableComponent({props}) {
         const keyIndex = index + 1;
         return (
           <div className="table">
-            <p className="data">{data.id}</p>
             <p className="data">{data.userId}</p>
+            <p className="data">{data.id}</p>
             <p className="dataD">{data.title}</p>
             <p className="data">{data.completed?'o':'x'}</p>
           </div>

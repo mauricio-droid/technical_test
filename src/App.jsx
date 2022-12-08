@@ -11,7 +11,6 @@ function App() {
       .then((response) => response.json())
       .then((result) => {
         setValue(result);
-        console.log(result);
       })
       .catch(() => {
         console.log('err');
@@ -23,7 +22,16 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <button type="button" onClick={()=> getDataAPI()}>Reload</button>
+      <div className="top">
+       <form className="form">
+          <div className="formData">
+            <label htmlFor="new">Create new</label>
+            <input type="text" name="new" id="new" />
+          </div>
+          <button type="submit">Create</button>
+        </form>
+        <button type="button" onClick={()=> getDataAPI()}>Reload</button>
+      </div>
       {
         value === undefined ? (<p>Loading...</p>):(<TableComponent props={value} />)
       }
