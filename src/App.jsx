@@ -1,10 +1,11 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import TableComponent from './components/table';
 import getData from './services/getData';
 import './App.css';
 
 function App() {
-  const [value, setValue]=useState();
+  const [onChangeInput, setOnChangeInput] = useState('')
+  const [value, setValue] = useState();
   const getDataAPI = () => {
     setValue();
     getData()
@@ -16,24 +17,36 @@ function App() {
         console.log('err');
       });
   };
+
   useEffect(() => {
     getDataAPI();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const updateTable = (e) => {
+    e.preventDefault();
+    const prevState = {
+      userId: Math.floor(Math.random() * 10),
+      id: value.length + 1,
+      title: onChangeInput,
+      completed: false,
+    }
+    const prevData = [prevState, ...value]
+    setValue(prevData)
+  }
   return (
     <div className="App">
       <div className="top">
-       <form className="form">
+        <form className="form" name="newUserForm" onSubmit={updateTable}>
           <div className="formData">
-            <label htmlFor="new">Create new</label>
-            <input type="text" name="new" id="new" />
+            <label htmlFor="newUser">Create new</label>
+            <input type="text" name="newUser" id="newUser" onChange={(e) => setOnChangeInput(e.target.value)} />
           </div>
           <button type="submit">Create</button>
         </form>
-        <button type="button" onClick={()=> getDataAPI()}>Reload</button>
+        <button type="button" onClick={() => getDataAPI()}>Reload</button>
       </div>
       {
-        value === undefined ? (<p>Loading...</p>):(<TableComponent props={value} />)
+        value === undefined ? (<p>Loading...</p>) : (<TableComponent props={value} />)
       }
     </div>
   );
